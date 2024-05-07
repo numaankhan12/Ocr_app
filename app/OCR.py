@@ -16,6 +16,7 @@ def process_image(image_path):
         if extracted_text:
             # Extract information from the extracted text
             data = {
+                
                 "extracted_data": {
                     "Name": extract_name_dob_sex(extracted_text)["Name"],
                     "DateOfBirth": extract_name_dob_sex(extracted_text)["DateOfBirth"],
