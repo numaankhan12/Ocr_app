@@ -1,5 +1,5 @@
-Pillow==10.0.0
+pillow==10.0.0
 pytesseract==0.3.10
 uvicorn
-fastapi[all]
+fastapi
 pdf2image
