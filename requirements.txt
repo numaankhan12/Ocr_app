@@ -3,3 +3,4 @@ pytesseract==0.3.10
 uvicorn
 fastapi
 pdf2image
+requests
