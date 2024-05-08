@@ -2,13 +2,17 @@ import pytesseract
 from PIL import Image
 import re
 import json
+import os
+from pathlib import Path
 from pdf2image import convert_from_path
 from datetime import datetime, timedelta
 
 # Set the path to the Tesseract executable
 # pytesseract.pytesseract.tesseract_cmd = "/usr/bin/tesseract.exe"
 # pytesseract.pytesseract.tesseract_cmd = r'c:\Program Files\Tesseract-OCR\tesseract.exe'
-pytesseract.pytesseract.tesseract_cmd = r"Tesseract-OCR\tesseract.exe"
+# pytesseract.pytesseract.tesseract_cmd = r"Tesseract-OCR\tesseract.exe"
+tesseract_path = Path(__file__).resolve().parent.parent / "Tesseract-OCR" / "tesseract.exe"
+pytesseract.pytesseract.tesseract_cmd = str(tesseract_path)
 
 def process_image(image_path):
     try:
