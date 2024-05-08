@@ -1,23 +1,20 @@
 import requests
+import json
 
-# URL of the online image
-image_url = 'https://www.edarabia.com/wp-content/uploads/2018/02/all-you-need-know-about-emirates-id.jpg'
+# Local path of the image
+image_path = 'Images/nmk_final.jpeg'
 
-# Download the image
-response = requests.get(image_url)
+# Upload the local image
+url = 'http://ocrapp-production-3458.up.railway.app/upload'
+files = {'file': open(image_path, 'rb')}
+resp = requests.post(url=url, files=files)
 
-# Check if the request was successful
-if response.status_code == 200:
-    # Save the image to a file
-    with open('image.jpg', 'wb') as f:
-        f.write(response.content)
-    
-    # Upload the downloaded image
-    url = ' https://ocrapp-production-f36d.up.railway.app/upload'
-    files = {'file': open('image.jpg', 'rb')}
-    resp = requests.post(url=url, files=files)
-    
-    # Print the response
-    print(resp.json())
-else:
-    print("Failed to download the image")  
+# Print the response content for debugging
+print(resp.content)
+
+# Try to parse the response as JSON
+try:
+    json_response = resp.json()
+    print(json_response)
+except json.decoder.JSONDecodeError:
+    print("Response is not in JSON format")
