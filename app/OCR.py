@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 # pytesseract.pytesseract.tesseract_cmd = "/usr/share/tesseract-ocr"
 # pytesseract.pytesseract.tesseract_cmd = r'c:\Program Files\Tesseract-OCR\tesseract.exe'
 # pytesseract.pytesseract.tesseract_cmd = r"Tesseract-OCR\tesseract.exe"
-tesseract_path = Path(__file__).resolve().parent.parent / "Tesseract-OCR" / "tesseract.exe"
+tesseract_path = Path(__file__).resolve().parent.parent / "Tesseract-OCR" 
 pytesseract.pytesseract.tesseract_cmd = str(tesseract_path)
 
 def process_image(image_path):
