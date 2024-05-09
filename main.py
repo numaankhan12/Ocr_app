@@ -1,5 +1,5 @@
 from fastapi import FastAPI, UploadFile, File
-from app.OCR import process_image
+from OCR import process_image
 
 app = FastAPI()
 
