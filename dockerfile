@@ -1,10 +1,5 @@
 FROM mcr.microsoft.com/windows/servercore:ltsc2019
-
-# Download and install Tesseract OCR
-RUN powershell -Command \
-    Invoke-WebRequest -Uri 'https://github.com/UB-Mannheim/tesseract/wiki/files/tesseract-ocr-w64-setup-v5.3.3.20231005.exe' -OutFile 'tesseract-setup.exe' ; \
-    Start-Process -Wait -FilePath 'tesseract-setup.exe' -ArgumentList '/S' ; \
-    Remove-Item 'tesseract-setup.exe'
+RUN chmod -R 777 /app/Tesseract-OCR
 
 # Install additional dependencies
 RUN powershell -Command \
