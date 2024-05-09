@@ -8,12 +8,11 @@ WORKDIR /app
 COPY . /app
 
 # Install any needed packages specified in requirements.txt
-RUN apt-get update && apt-get install -y tesseract-ocr tesseract-ocr-eng tesseract-ocr-ara
+RUN apt-get update && apt-get install -y tesseract-ocr tesseract-ocr-eng tesseract-ocr-ara libleptonica-dev libtesseract-dev libleptonica-dev g++ autoconf automake libtool pkg-config libpng-dev libjpeg62-turbo-dev libtiff5-dev zlib1g-dev libwebpdemux2 libwebp-dev libopenjp2-7-dev libgif-dev libarchive-dev libcurl4-openssl-dev
 RUN pip install --trusted-host pypi.python.org -r requirements.txt
 RUN pip install uvicorn
 RUN pip install python-multipart
-USER root
-RUN chmod 777 /Tesseract-OCR/tesseract.exe
+
 
 
 
