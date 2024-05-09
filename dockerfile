@@ -1,22 +1,32 @@
-FROM ubuntu:latest
- 
-RUN apt-get --fix-missing update && apt-get --fix-broken install && apt-get install -y poppler-utils && apt-get install -y tesseract-ocr && \
-apt-get install -y libtesseract-dev && apt-get install -y libleptonica-dev && ldconfig && apt-get install -y python3.9 && \
-apt-get install -y python3-pip && apt install -y ffmpeg libsm6 libxext6
- 
-# Get language data
-RUN apt-get install tesseract-ocr-eng tesseract-ocr-ara
- 
+FROM mcr.microsoft.com/windows/servercore:ltsc2019
+
+# Download and install Tesseract OCR
+RUN powershell -Command \
+    Invoke-WebRequest -Uri 'https://github.com/UB-Mannheim/tesseract/wiki/files/tesseract-ocr-w64-setup-v5.3.3.20231005.exe' -OutFile 'tesseract-setup.exe' ; \
+    Start-Process -Wait -FilePath 'tesseract-setup.exe' -ArgumentList '/S' ; \
+    Remove-Item 'tesseract-setup.exe'
+
+# Install additional dependencies
+RUN powershell -Command \
+    choco install -y poppler-utils ; \
+    choco install -y python --version 3.9 ; \
+    choco install -y ffmpeg
+
+# Set the working directory
 WORKDIR /app
+
+# Copy the application code
 COPY . /app
- 
+
+# Copy the requirements file and install dependencies
 COPY requirements.txt requirements.txt
-RUN pip3 install -r requirements.txt
- 
+RUN pip install -r requirements.txt
+
+# Expose port 80
 EXPOSE 80
- 
+
 # Set the locale to C.UTF-8 for Python 3
 ENV LANG C.UTF-8
 
 # Run the application using uvicorn with automatic reload
-CMD ["python3", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "${PORT}"]
+CMD ["python", "-m", "uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
